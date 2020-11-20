@@ -15,14 +15,6 @@ import { useForm } from 'react-hook-form';
 import { AiOutlineSave, AiOutlineAlignRight } from 'react-icons/ai';
 
 const NewPost = () => {
-  const onSubmit = () => {
-    if (publish) {
-      // Save and publish
-    } else {
-      // Save this post as a draft
-    }
-  };
-  const [isPublish, setIsPublish] = useState(false);
   const { register, handleSubmit, errors } = useForm();
   const { user, logout } = useUser();
   const [editorTheme, setEditorTheme] = useState(false);
@@ -31,8 +23,13 @@ const NewPost = () => {
   const [htmlValue, sethtmlValue] = useState(
     '<h1>Start Typing in Markdown and you will see a preview here as you go.'
   );
-
   const valueGetter = useRef();
+
+  const onSubmit = (values) => {
+    console.log(values);
+    console.log(htmlValue);
+    console.log(user.id);
+  };
   function handleEditorDidMount(_valueGetter) {
     setIsEditorReady(true);
     valueGetter.current = _valueGetter;
@@ -72,7 +69,7 @@ const NewPost = () => {
         <div className='flex flex-col sm:flex-row sm:justify-around '>
           <div className='w-96 h-screen bg-gray-50'>
             <div className='w-11/12 mx-auto max-w-7xl mt-4 '>
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <label className='text-lg font-semibold mt-5' htmlFor='text'>
                   Title
                   <input
@@ -121,10 +118,22 @@ const NewPost = () => {
                 <label class='inline-flex items-center mt-2'>
                   <span class='text-xl mt-2'>Publish?</span>
                   <input
+                    ref={register}
+                    name='publish'
                     type='checkbox'
-                    class='form-checkbox border border-gray-100 h-11 w-11 rounded-lg bg-gray-50'
+                    className='ml-5 form-checkbox border border-gray-100 h-8 w-8 rounded-lg bg-gray-50'
                   />
                 </label>
+                <p className='text-sm text-gray-600'>
+                  Check this box and hit save to push the article live. Leave it
+                  unchecked and hit save to save the article as a draft you can
+                  come back to later.
+                </p>
+                <div className='w-full text-center'>
+                  <button type='submit'>
+                    <AiOutlineSave className='text-7xl text-green-500' />
+                  </button>
+                </div>
               </form>
             </div>
 
@@ -190,24 +199,11 @@ const NewPost = () => {
           }}
         />
         <div className='absolute right-10 bottom-10 z-50 flex flex-row justify-end items-end'>
-          <label class='inline-flex items-center'>
-            <span class='text-xl'>Publish?</span>
-            <input
-              type='checkbox'
-              class='form-checkbox border border-gray-100 h-11 w-11 rounded-lg bg-gray-50'
-            />
-          </label>
           <button
             onClick={() => {
               setShow(!show);
             }}>
             <AiOutlineAlignRight className='text-5xl  ' />
-          </button>
-          <button
-            onClick={() => {
-              setShow(!show);
-            }}>
-            <AiOutlineSave className='text-5xl text-green-500' />
           </button>
         </div>
 
