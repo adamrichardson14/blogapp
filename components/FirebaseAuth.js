@@ -1,12 +1,12 @@
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import initFirebase from '../utils/auth/initFirebase'
-import { setUserCookie } from '../utils/auth/userCookies'
-import { mapUserData } from '../utils/auth/mapUserData'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import initFirebase from '../utils/auth/initFirebase';
+import { setUserCookie } from '../utils/auth/userCookies';
+import { mapUserData } from '../utils/auth/mapUserData';
 
 // Init the Firebase app.
-initFirebase()
+initFirebase();
 
 const firebaseAuthConfig = {
   signInFlow: 'popup',
@@ -15,18 +15,21 @@ const firebaseAuthConfig = {
   signInOptions: [
     {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+
       requireDisplayName: false,
     },
+    { provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID },
+    { provider: firebase.auth.GithubAuthProvider.PROVIDER_ID },
   ],
-  signInSuccessUrl: '/',
+  signInSuccessUrl: '/dashboard',
   credentialHelper: 'none',
   callbacks: {
     signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
-      const userData = await mapUserData(user)
-      setUserCookie(userData)
+      const userData = await mapUserData(user);
+      setUserCookie(userData);
     },
   },
-}
+};
 
 const FirebaseAuth = () => {
   return (
@@ -36,7 +39,7 @@ const FirebaseAuth = () => {
         firebaseAuth={firebase.auth()}
       />
     </div>
-  )
-}
+  );
+};
 
-export default FirebaseAuth
+export default FirebaseAuth;
