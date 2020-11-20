@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import { useUser } from '../utils/auth/useUser';
+import Header from '../components/DashHeader';
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -33,7 +34,8 @@ const Index = () => {
   }
 
   return (
-    <div>
+    <>
+      <Header />
       <div>
         <p>You're signed in. Email: {user.email}</p>
         <p
@@ -58,7 +60,7 @@ const Index = () => {
       ) : (
         <div>Loading...</div>
       )}
-    </div>
+    </>
   );
 };
 
