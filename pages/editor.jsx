@@ -60,9 +60,6 @@ const Editor = () => {
           </div>
         </div>
       </div>
-      <button onClick={handleShowValue} disabled={!isEditorReady}>
-        Show value
-      </button>
     </>
   );
 };
