@@ -6,6 +6,7 @@ import { IoMdAddCircleOutline } from 'react-icons/io';
 import Image from 'next/image';
 import firebase from 'firebase/app';
 import { TimeStamp } from 'firebase';
+import { FiArrowRightCircle, FiEdit } from 'react-icons/fi';
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -74,12 +75,12 @@ const Index = () => {
         // Main content goes here...
         <main className='max-w-5xl mt-5 mx-auto'>
           <div className='w-11/12 mx-auto'>
-            {postData && postData.length === 0 ? (
+            {!postData && !siteError ? (
               <div>
                 <h4>You have no posts yet. Create your first post.</h4>
                 <Link href='/newpost'>
                   <button className='w-full sm:w-auto flex-none bg-gray-900 hover:bg-gray-700 text-white text-lg font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200'>
-                    Create Site
+                    Create Post
                   </button>
                 </Link>
               </div>
@@ -94,6 +95,7 @@ const Index = () => {
                       postData.map((post) => {
                         return (
                           <div
+                            key={post.url}
                             className={`grid grid-cols-12 mt-4 rounded-xl ${
                               post.publish ? 'bg-green-50' : 'bg-red-50'
                             } `}>
@@ -114,7 +116,7 @@ const Index = () => {
                               </div>
                             </div>
 
-                            <div className='col-span-8 flex justify-center flex-col'>
+                            <div className='col-span-9 flex justify-center flex-col'>
                               <h5>{post.title}</h5>
                               <div className='flex -mt-2'>
                                 <span className=' text-light-blue-500 text-md'>
@@ -131,13 +133,24 @@ const Index = () => {
                                 </span>
                               </div>
 
-                              <p className='text-md'>
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Accusantium amet numquam
-                                explicabo fuga sunt, quia saepe, et pariatur
-                                mollitia earum illum. Ad aut cum dignissimos non
-                                harum ut, consequuntur in!
-                              </p>
+                              <p className='text-md'>{post.excerpt}</p>
+                              <div className='-mt-2'>
+                                <Link
+                                  href={{
+                                    pathname: '/editpost/[id]',
+                                    query: { id: post.id },
+                                  }}>
+                                  <button className='w-20  uppercase text-gray-500 font-bold text-lg hover:text-gray-700'>
+                                    Edit
+                                  </button>
+                                </Link>
+                                <button className='w-20 uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+                                  View
+                                </button>
+                                <button className='w-20 uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+                                  {post.publish ? 'UnPublish' : 'Publish'}
+                                </button>
+                              </div>
                             </div>
                           </div>
                         );
@@ -150,7 +163,7 @@ const Index = () => {
           <div className='absolute right-10 bottom-10 z-50 flex flex-row justify-end items-end'>
             <Link href='newpost'>
               <button>
-                <IoMdAddCircleOutline className='text-7xl text-light-blue-500 hover:text-blue-600 ' />
+                <IoMdAddCircleOutline className='text-7xl hover:text-black text-gray-900 ' />
               </button>
             </Link>
           </div>

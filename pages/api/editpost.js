@@ -15,6 +15,8 @@ if (!admin.apps.length) {
 
 const addPost = async (req, res) => {
   const token = req.headers.token;
+  const postID = req.query.id;
+
   const {
     category,
     excerpt,
@@ -35,10 +37,8 @@ const addPost = async (req, res) => {
       publish,
       slug,
       title,
-      authorId: user.uid,
       html,
       imageUrl,
-      id: user.uid + Math.random().toString(36).substr(2, 5).toUpperCase(),
       mdText,
     };
     if (!user) {
@@ -49,14 +49,31 @@ const addPost = async (req, res) => {
       const postInfo = await admin
         .firestore()
         .collection(`sites/${user.uid}/posts`)
-        .doc(data.id)
-        .set({
+        .doc(postID)
+        .get();
+
+      const existingPost = postInfo.data();
+
+      if (existingPost.id != postID) {
+        return res.status(401).send('Not authorised, ID is not correct');
+      }
+      if (existingPost.authorId != user.uid) {
+        return res
+          .status(401)
+          .send('Not authorised, you must be the author of a post to edit it.');
+      }
+
+      const postSnapshot = await admin
+        .firestore()
+        .collection(`sites/${user.uid}/posts`)
+        .doc(postID)
+        .update({
           ...data,
-          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
 
       console.log(res);
-      return res.status(200).json(data, postInfo);
+      return res.status(200).json(data, postSnapshot);
     } catch (error) {
       console.log(error);
       return res.status(500).send('Something went wrong');

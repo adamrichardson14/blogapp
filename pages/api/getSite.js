@@ -13,7 +13,7 @@ if (!admin.apps.length) {
   });
 }
 
-const getFood = async (req, res) => {
+const getSite = async (req, res) => {
   const token = req.headers.token;
 
   try {
@@ -38,4 +38,4 @@ const getFood = async (req, res) => {
   }
 };
 
-export default getFood;
+export default getSite;
