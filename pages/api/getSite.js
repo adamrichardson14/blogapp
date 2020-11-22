@@ -18,15 +18,23 @@ const getFood = async (req, res) => {
 
   try {
     const user = await verifyIdToken(token);
+    if (!user) {
+      return res.status(401).send('Not authorised');
+    }
     const siteInfo = await admin
       .firestore()
       .collection('sites')
       .doc(user.uid)
       .get();
+    console.log(siteInfo);
+    if (!siteInfo.exists) {
+      return res.status(404).send('You do not have a site yet');
+    }
 
     return res.status(200).json(siteInfo.data());
   } catch (error) {
-    return res.status(401).send('You are unauthorised');
+    console.log(error);
+    return res.status(500).send('Server Error');
   }
 };
 

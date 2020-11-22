@@ -13,20 +13,17 @@ const firebaseAuthConfig = {
   // Auth providers
   // https://github.com/firebase/firebaseui-web#configure-oauth-providers
   signInOptions: [
-    {
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-
-      requireDisplayName: false,
-    },
     { provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID },
-    { provider: firebase.auth.GithubAuthProvider.PROVIDER_ID },
+    // { provider: firebase.auth.GithubAuthProvider.PROVIDER_ID },
   ],
   signInSuccessUrl: '/dashboard',
   credentialHelper: 'none',
   callbacks: {
     signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
+      console.log(user);
       const userData = await mapUserData(user);
       setUserCookie(userData);
+      console.log(userData);
     },
   },
 };
