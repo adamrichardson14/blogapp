@@ -38,7 +38,7 @@ const addPost = async (req, res) => {
       authorId: user.uid,
       html,
       imageUrl,
-      id: user.uid + Math.random().toString(36).substr(2, 5).toUpperCase(),
+      id: user.uid + Math.random().toString(36).substr(2, 10).toUpperCase(),
       mdText,
     };
     if (!user) {

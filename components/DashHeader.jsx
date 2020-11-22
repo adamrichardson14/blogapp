@@ -31,7 +31,7 @@ const Header = ({ url }) => {
   return (
     <>
       <Head>
-        <title>Next JS Blog</title>
+        <title>Zoeble</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <nav className='bg-black'>
@@ -40,7 +40,7 @@ const Header = ({ url }) => {
             <div className='flex items-center justify-between w-full'>
               <div className='flex-shrink-0'>
                 <Link href='/'>
-                  <a className='text-gray-200 text-xl font-semibold'>Blogify</a>
+                  <a className='text-gray-200 text-xl font-semibold'>Zoeble</a>
                 </Link>
               </div>
               <div className='hidden md:block'>

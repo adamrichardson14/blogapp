@@ -22,7 +22,6 @@ const Index = () => {
       revalidateOnFocus: false,
     }
   );
-  console.log(data);
 
   if (!user) {
     return (

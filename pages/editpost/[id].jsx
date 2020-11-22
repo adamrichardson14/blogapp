@@ -60,9 +60,9 @@ const EditPost = ({ id }) => {
   console.log(postData);
 
   function handleEditorDidMount(_valueGetter) {
+    valueGetter.current = _valueGetter;
     setMdText(postData.mdText);
     processMD();
-    valueGetter.current = _valueGetter;
     setIsEditorReady(true);
   }
 
