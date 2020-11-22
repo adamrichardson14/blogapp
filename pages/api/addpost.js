@@ -29,6 +29,7 @@ const addPost = async (req, res) => {
       authorId: user.uid,
       html,
       imageUrl,
+      id: user.uid + Math.random().toString(36).substr(2, 5).toUpperCase(),
     };
     if (!user) {
       return res.status(401).send('Not authorised');
@@ -39,7 +40,12 @@ const addPost = async (req, res) => {
         .firestore()
         .collection(`sites/${user.uid}/posts`)
         .doc(slug)
-        .set(data);
+        .set({
+          ...data,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+
+      console.log(res);
       return res.status(200).json(data, postInfo);
     } catch (error) {
       console.log(error);

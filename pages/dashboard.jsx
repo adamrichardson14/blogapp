@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { useUser } from '../utils/auth/useUser';
 import Header from '../components/DashHeader';
 import { IoMdAddCircleOutline } from 'react-icons/io';
+import Image from 'next/image';
+import firebase from 'firebase/app';
+import { TimeStamp } from 'firebase';
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -14,14 +17,23 @@ const fetcher = (url, token) =>
 const Index = () => {
   const { user, logout } = useUser();
 
-  const { data, error } = useSWR(
-    user ? ['/api/getSite', user.token] : null,
+  const { data: siteData, siteError } = useSWR(
+    () => (user ? ['/api/getSite', user.token] : null),
     fetcher,
     {
       revalidateOnFocus: false,
     }
   );
-  console.log(data);
+
+  const { data: postData, postError } = useSWR(
+    () => (user ? ['/api/getallpostsauth', user.token] : null),
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+  console.log(siteData);
+  console.log(postData);
 
   if (!user) {
     return (
@@ -41,7 +53,7 @@ const Index = () => {
     <>
       <Header />
 
-      {error && (
+      {siteError && (
         <div className='max-w-6xl mx-auto w-10/12 mt-10'>
           <h1 className=''>Create your site in a few seconds</h1>
           <p className='max-w-screen-lg text-lg sm:text-2xl sm:leading-10 font-medium mb-10 sm:mb-11'>
@@ -58,22 +70,82 @@ const Index = () => {
           </Link>
         </div>
       )}
-      {data && !error ? (
+      {siteData && !siteError ? (
         // Main content goes here...
-        <main className='max-w-6xl mt-5'>
-          <div className='mx-auto w-10/12'>
-            <h1>{data.title}</h1>
-            <p>You're signed in. email: {user.email}</p>
-            <p
-              style={{
-                display: 'inline-block',
-                color: 'blue',
-                textDecoration: 'underline',
-                cursor: 'pointer',
-              }}
-              onClick={() => logout()}>
-              Log out
-            </p>
+        <main className='max-w-5xl mt-5 mx-auto'>
+          <div className='w-11/12 mx-auto'>
+            {postData && postData.length === 0 ? (
+              <div>
+                <h4>You have no posts yet. Create your first post.</h4>
+                <Link href='/newpost'>
+                  <button className='w-full sm:w-auto flex-none bg-gray-900 hover:bg-gray-700 text-white text-lg font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200'>
+                    Create Site
+                  </button>
+                </Link>
+              </div>
+            ) : (
+              <>
+                <div>
+                  <h2>Posts</h2>
+                </div>
+                <div>
+                  <div>
+                    {postData &&
+                      postData.map((post) => {
+                        return (
+                          <div
+                            className={`grid grid-cols-12 mt-4 rounded-xl ${
+                              post.publish ? 'bg-green-50' : 'bg-red-50'
+                            } `}>
+                            <div className='col-span-3 mr-5 relative'>
+                              <Image
+                                src={post.imageUrl}
+                                className='object-cover rounded-tl-xl rounded-bl-xl shadow'
+                                height={170}
+                                width={170}
+                                layout='responsive'></Image>
+                              <div
+                                className={`${
+                                  post.publish ? 'hidden' : 'block'
+                                } `}>
+                                <span className='absolute top-0 left-0 bg-red-500 rounded-tl-xl text-red-50 rounded-br-xl px-2 py-1'>
+                                  DRAFT
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className='col-span-8 flex justify-center flex-col'>
+                              <h5>{post.title}</h5>
+                              <div className='flex -mt-2'>
+                                <span className=' text-light-blue-500 text-md'>
+                                  <span className='text-gray-700'>
+                                    Published:{' '}
+                                  </span>
+                                  {new Date(post.date).toDateString()}
+                                </span>
+                                <span className=' text-gray-500 ml-4'>
+                                  <span className='text-gray-700'>
+                                    Category:{' '}
+                                  </span>{' '}
+                                  {post.category}
+                                </span>
+                              </div>
+
+                              <p className='text-md'>
+                                Lorem ipsum dolor sit, amet consectetur
+                                adipisicing elit. Accusantium amet numquam
+                                explicabo fuga sunt, quia saepe, et pariatur
+                                mollitia earum illum. Ad aut cum dignissimos non
+                                harum ut, consequuntur in!
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           <div className='absolute right-10 bottom-10 z-50 flex flex-row justify-end items-end'>
             <Link href='newpost'>

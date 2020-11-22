@@ -21,16 +21,28 @@ const getAllPostsAuth = async (req, res) => {
     if (!user) {
       return res.status(401).send('Not authorised');
     }
-    const allPostsAuth = await admin
+    console.log(user);
+    const allPostsSnapshot = await admin
       .firestore()
-      .collection(`sites/${user.uid}/posts`)
+      .collection('sites')
+      .doc(user.uid)
+      .collection('posts')
       .get();
-    console.log(allPostsAuth);
-    if (!allPostsAuth.exists) {
+    const allPosts = [];
+    if (allPostsSnapshot) {
+      allPostsSnapshot.forEach((post) => {
+        const postObject = post.data();
+        const date = postObject.createdAt.toDate();
+        const postData = { ...postObject, date };
+        allPosts.push(postData);
+      });
+    }
+
+    if (allPosts.length === 0) {
       return res.status(404).send('You do not have any posts yet');
     }
 
-    return res.status(200).json(allPostsAuth.data());
+    return res.status(200).json(allPosts);
   } catch (error) {
     console.log(error);
     return res.status(500).send('Server Error');

@@ -44,7 +44,7 @@ export const validateBlogSlug = (value) => {
 
 export const validateTitle = (value) => {
   let error;
-  if (value.length > 40) {
+  if (value.length > 100) {
     error = 'Your title can not be that long';
     return error || true;
   }
