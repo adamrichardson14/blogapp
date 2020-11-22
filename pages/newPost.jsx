@@ -45,29 +45,31 @@ const NewPost = () => {
 
   const onSubmit = async (values) => {
     console.log(values);
+    const slugSubmitValue = getValues('slugurl');
+
     const data = {
       title: values.title,
-      slug: values.slugurl,
+      slug: slugSubmitValue,
       category: values.category,
       excerpt: values.excerpt,
-      publish: values.published,
+      publish: values.publish,
       html: htmlValue,
       authorId: user.id,
       imageUrl: imageUrl,
     };
     try {
-      // let config = {
-      //   method: 'post',
-      //   url: 'http://localhost:3000/api/addpost',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     token: user.token,
-      //   },
-      //   data: data,
-      // };
-      // console.log(data);
-      // const response = await axios(config); //TODO: Add toast for successful creation
-      // console.log(response);
+      let config = {
+        method: 'post',
+        url: 'http://localhost:3000/api/addpost',
+        headers: {
+          'Content-Type': 'application/json',
+          token: user.token,
+        },
+        data: data,
+      };
+      console.log(data);
+      const response = await axios(config); //TODO: Add toast for successful creation
+      console.log(response);
     } catch (err) {
       console.error(err); //TODO: Add toast for error
     }
@@ -93,6 +95,11 @@ const NewPost = () => {
         console.log(data.contents);
       });
   }
+
+  useEffect(() => {
+    const slugValue = getValues('slugurl');
+    console.log(slugValue);
+  });
 
   if (!user) {
     return (

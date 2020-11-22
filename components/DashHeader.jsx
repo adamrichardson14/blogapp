@@ -24,7 +24,7 @@ const MobileHeaderLink = ({ text, href, router }) => (
   </a>
 );
 
-const Header = () => {
+const Header = ({ url }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { logout } = useUser();
@@ -50,10 +50,10 @@ const Header = () => {
                     href='/dashboard'
                     router={router}
                   />
-                  <MdHeaderLink text='Blog' href='/blog' router={router} />
+
                   <MdHeaderLink
-                    text='Contact'
-                    href='/contact'
+                    text='My Account'
+                    href='/account'
                     router={router}
                   />
                   <button
@@ -119,8 +119,12 @@ const Header = () => {
               href='/dashboard'
               router={router}
             />
-            <MobileHeaderLink text='Blog' href='/blog' router={router} />
-            <MobileHeaderLink text='Contact' href='/contact' router={router} />
+
+            <MobileHeaderLink
+              text='My Account'
+              href='/account'
+              router={router}
+            />
             <button
               className='text-sm text-gray-50 bg-gray-800 rounded-lg px-3 py-1 hover:bg-gray-900 ml-3'
               onClick={() => {
