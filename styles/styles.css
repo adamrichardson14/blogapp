@@ -5,7 +5,7 @@
 
 @layer base {
   .Toastify__toast--success {
-    @apply bg-green-500 text-lg font-semibold;
+    @apply bg-green-300 text-lg font-semibold;
   }
 
   h1 {

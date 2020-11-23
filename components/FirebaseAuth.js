@@ -14,7 +14,7 @@ const firebaseAuthConfig = {
   // https://github.com/firebase/firebaseui-web#configure-oauth-providers
   signInOptions: [
     { provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID },
-    // { provider: firebase.auth.GithubAuthProvider.PROVIDER_ID },
+    { provider: firebase.auth.GithubAuthProvider.PROVIDER_ID },
   ],
   signInSuccessUrl: '/dashboard',
   credentialHelper: 'none',

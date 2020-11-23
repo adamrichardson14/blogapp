@@ -93,7 +93,6 @@ const NewPost = () => {
       setMdText('');
       sethtmlValue('');
     } catch (error) {
-      console.log(error.response);
       notify('error', error.response.data.error, {
         position: 'bottom-center',
       });

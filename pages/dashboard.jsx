@@ -40,7 +40,7 @@ const Index = () => {
         }
       );
       const msg = await res.json();
-      console.log(msg);
+
       mutate();
       notify('success', 'Post successfully deleted', {
         position: 'bottom-center',
@@ -78,9 +78,6 @@ const Index = () => {
       console.log(err);
     }
   };
-
-  if (!postData) return <h1>loading</h1>;
-  if (postError) return <h1>You don't have any posts yet, create one now</h1>;
 
   return (
     <React.Fragment>
@@ -176,7 +173,7 @@ const Index = () => {
             </div>
           )}
         </div>
-        <div className='absolute right-10 bottom-10 z-50 flex flex-row justify-end items-end'>
+        <div className='fixed right-10 bottom-10 z-50 flex flex-row justify-end items-end'>
           <Link href='newpost'>
             <button>
               <IoMdAddCircleOutline className='text-7xl hover:text-black text-gray-900 ' />
