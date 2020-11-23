@@ -1,12 +1,10 @@
-import useSWR, { mutate } from 'swr';
+import React from 'react';
+import useSWR from 'swr';
 import Link from 'next/link';
 import { useUser } from '../utils/auth/useUser';
 import Header from '../components/DashHeader';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import Image from 'next/image';
-import firebase from 'firebase/app';
-import { TimeStamp } from 'firebase';
-import { FiArrowRightCircle, FiEdit } from 'react-icons/fi';
 import { toast, ToastContainer } from 'react-toastify';
 
 const fetcher = (url, token) =>
@@ -18,7 +16,6 @@ const fetcher = (url, token) =>
 
 const Index = () => {
   const { user } = useUser();
-  const notify = (type, text, options) => toast[type](text, options);
 
   const { data: postData, postError, mutate } = useSWR(
     user ? ['/api/getallpostsauth', user.token] : null,
@@ -27,6 +24,8 @@ const Index = () => {
       revalidateOnFocus: false,
     }
   );
+
+  const notify = (type, text, options) => toast[type](text, options);
 
   const handlePublishChange = async (id) => {
     try {
@@ -61,7 +60,7 @@ const Index = () => {
   if (postError) return <h1>You don't have any posts yet, create one now</h1>;
 
   return (
-    <>
+    <React.Fragment>
       <Header />
       <main className='max-w-5xl mt-5 mx-auto'>
         <div className='w-11/12 mx-auto'>
@@ -164,8 +163,7 @@ const Index = () => {
           pauseOnHover
         />
       </main>
-      )
-    </>
+    </React.Fragment>
   );
 };
 
