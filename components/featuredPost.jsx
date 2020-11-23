@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-const FeaturedPost = ({ post }) => {
+const FeaturedPost = ({ post, url }) => {
   return (
     <>
       <div className='w-11/12 mx-auto relative mb-2'>
@@ -27,7 +27,7 @@ const FeaturedPost = ({ post }) => {
                 pathname: '/blog/[blogurl]/[slug]',
                 query: {
                   slug: post.slug,
-                  blogurl: post.url,
+                  blogurl: url,
                 },
               }}>
               <motion.button

@@ -13,9 +13,10 @@ const DisplayPosts = ({ posts, url }) => (
               <div className='flex-row flex lg:flex-none items-center sm:shadow-lg sm:rounded-lg sm:mt-2 lg:mt-1 lg:flex-col lg:w-full lg:my-1 lg:shadow-xs lg:border-none lg:rounded-lg'>
                 <Link
                   href={{
-                    pathname: '/blog/post/[slug]',
+                    pathname: '/blog/[blogurl]/[slug]',
                     query: {
                       slug: post.slug,
+                      blogurl: url,
                     },
                   }}>
                   <a>
@@ -49,9 +50,10 @@ const DisplayPosts = ({ posts, url }) => (
                 <div className='w-7/12 lg:w-full lg:px-2 lg:pb-2 space-y-1'>
                   <Link
                     href={{
-                      pathname: '/blog/post/[slug]',
+                      pathname: '/blog/[blogurl]/[slug]',
                       query: {
                         slug: post.slug,
+                        blogurl: url,
                       },
                     }}>
                     <a>
@@ -79,10 +81,10 @@ const DisplayPosts = ({ posts, url }) => (
               </p>
               <Link
                 href={{
-                  pathname: `/blog/[blogurl]/[slug]`,
+                  pathname: '/blog/[blogurl]/[slug]',
                   query: {
-                    blogurl: url,
                     slug: post.slug,
+                    blogurl: url,
                   },
                 }}>
                 <button className='text-gray-800 text-base hover:text-gray-900 sm:hidden pb-3'>

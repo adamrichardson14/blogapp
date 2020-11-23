@@ -7,8 +7,8 @@ import { useUser } from '../utils/auth/useUser';
 const MdHeaderLink = ({ text, href, router }) => (
   <a
     href={href}
-    className={`px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-900 ${
-      router.pathname === href ? 'bg-gray-900' : 'bg-black'
+    className={`px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 focus:outline-none focus:text-white focus:bg-gray-900 ${
+      router.pathname === href ? 'bg-gray-700' : 'bg-bg-gray-800'
     }`}>
     {text}
   </a>
@@ -34,13 +34,13 @@ const Header = ({ url }) => {
         <title>Zoeble</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
-      <nav className='bg-black'>
+      <nav className='bg-gray-900'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex items-center justify-between h-16'>
             <div className='flex items-center justify-between w-full'>
               <div className='flex-shrink-0'>
                 <Link href='/'>
-                  <a className='text-gray-200 text-xl font-semibold'>Zoeble</a>
+                  <a className='text-gray-200 text-3xl font-bold'>Zoeble</a>
                 </Link>
               </div>
               <div className='hidden md:block'>
@@ -57,7 +57,7 @@ const Header = ({ url }) => {
                     router={router}
                   />
                   <button
-                    className='text-xs text-gray-50 bg-gray-800 rounded-lg px-3 py-1 hover:bg-gray-900'
+                    className='px-3 py-2 text-sm rounded-md font-medium text-gray-300 hover:text-white hover:bg-gray-800 focus:outline-none focus:text-white focus:bg-gray-800'
                     onClick={() => {
                       logout();
                     }}>
@@ -126,7 +126,7 @@ const Header = ({ url }) => {
               router={router}
             />
             <button
-              className='text-sm text-gray-50 bg-gray-800 rounded-lg px-3 py-1 hover:bg-gray-900 ml-3'
+              className='px-3 py-2 rounded-md font-medium text-gray-300 hover:text-white hover:bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-900'
               onClick={() => {
                 logout();
               }}>

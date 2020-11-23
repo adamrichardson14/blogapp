@@ -65,8 +65,8 @@ const BlogHome = ({ siteInfo, posts, featuredPost }) => {
         </div>
       </header>
       <div className='wrapper max-w-7xl mx-auto mb-5 w-10/12'>
-        <FeaturedPost post={featuredPost} />
-        <DisplayPosts posts={posts} />
+        <FeaturedPost post={featuredPost} url={siteInfo.url} />
+        <DisplayPosts posts={posts} url={siteInfo.url} />
       </div>
       <Footer title={siteInfo.title} />
     </>
