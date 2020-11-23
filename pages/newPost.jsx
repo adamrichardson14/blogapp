@@ -66,6 +66,7 @@ const NewPost = () => {
       authorId: user.id,
       imageUrl: imageUrl,
       mdText,
+      featured: values.featured,
     };
     try {
       let config = {
@@ -325,6 +326,21 @@ const NewPost = () => {
                     Check this box and hit save to push the article live. Leave
                     it unchecked and hit save to save the article as a draft you
                     can come back to later.
+                  </p>
+                  <label className='inline-flex items-center mt-2'>
+                    <span className='block text-lg font-semibold mt-1'>
+                      Featured Post?
+                    </span>
+                    <input
+                      ref={register}
+                      name='featured'
+                      type='checkbox'
+                      className='ml-5 form-checkbox border border-gray-300 h-8 w-8 rounded-lg bg-gray-100'
+                    />
+                  </label>
+                  <p className='text-sm text-gray-600'>
+                    Only one featured post will be shown on the home page, and
+                    one per category (most recent post).
                   </p>
 
                   <div className='w-full text-center'>

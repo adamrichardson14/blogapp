@@ -52,6 +52,7 @@ const getAllPostsAuth = async (req, res) => {
         slug: postData.slug,
         created: postData.date,
         date: postData.createdAt.toDate(),
+        featured: postData.featured,
       };
 
       posts.push(post);

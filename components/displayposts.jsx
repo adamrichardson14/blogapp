@@ -10,7 +10,7 @@ const DisplayPosts = ({ posts, url }) => (
         posts.map((post) => {
           return (
             <React.Fragment key={post.slug}>
-              <div className='flex-row flex lg:flex-none items-center sm:shadow-lg sm:rounded-lg sm:mt-4 lg:flex-col lg:w-full lg:my-1 lg:shadow-xs lg:border-none lg:rounded-lg'>
+              <div className='flex-row flex lg:flex-none items-center sm:shadow-lg sm:rounded-lg sm:mt-2 lg:mt-1 lg:flex-col lg:w-full lg:my-1 lg:shadow-xs lg:border-none lg:rounded-lg'>
                 <Link
                   href={{
                     pathname: '/blog/post/[slug]',
@@ -21,7 +21,7 @@ const DisplayPosts = ({ posts, url }) => (
                   <a>
                     <motion.div
                       layoutId={'postImage'}
-                      className='w-20 h-20 mr-4 sm:w-40 sm:h-40  lg:hidden'>
+                      className='w-20 h-20  sm:w-48 sm:h-48  lg:hidden'>
                       <Image
                         src={post.imageUrl}
                         alt={post.title}
@@ -46,7 +46,7 @@ const DisplayPosts = ({ posts, url }) => (
                     </motion.div>
                   </a>
                 </Link>
-                <div className='w-7/12 lg:w-full lg:px-2 lg:pb-2'>
+                <div className='w-7/12 lg:w-full lg:px-2 lg:pb-2 space-y-1'>
                   <Link
                     href={{
                       pathname: '/blog/post/[slug]',
@@ -58,18 +58,18 @@ const DisplayPosts = ({ posts, url }) => (
                       <motion.h2
                         layoutId={post.title}
                         animate={{ scale: 1 }}
-                        className='font-bold sm:text-lg md:text-xl lg:text-2xl'>
+                        className='font-bold text-xl md:text-xl lg:text-3xl sm:truncate'>
                         {post.title}
                       </motion.h2>
                     </a>
                   </Link>
-                  <span className='text-sm text-gray-600 lg:text-base'>
+                  <span className='text-sm font-bold text-light-blue-500 lg:text-base'>
                     {new Date(post.date).toDateString()}
                   </span>
-                  <p className='text-gray-700 hidden sm:block'>
-                    {truncateString(post.excerpt, 120)}
+                  <p className='text-gray-500 mt-0 hidden text-base sm:block lg:text-xl'>
+                    {truncateString(post.excerpt, 100)}
                   </p>
-                  <button className='text-yellow-700 text-base hover:text-yellow-600 hidden sm:block md:text-base lg:text-base'>
+                  <button className='text-gray-800 font-semibold text-base hover:text-gray-600 hidden sm:block md:text-base lg:text-xl'>
                     Read full post
                   </button>
                 </div>
@@ -85,7 +85,7 @@ const DisplayPosts = ({ posts, url }) => (
                     slug: post.slug,
                   },
                 }}>
-                <button className='text-yellow-700 text-base hover:text-yellow-600 sm:hidden pb-3'>
+                <button className='text-gray-800 text-base hover:text-gray-900 sm:hidden pb-3'>
                   Read full post
                 </button>
               </Link>

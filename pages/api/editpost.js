@@ -26,6 +26,7 @@ const editPost = async (req, res) => {
     html,
     imageUrl,
     mdText,
+    featured,
   } = req.body;
 
   try {
@@ -40,6 +41,7 @@ const editPost = async (req, res) => {
       html,
       imageUrl,
       mdText,
+      featured,
     };
     if (!user) {
       return res.status(401).send('Not authorised');

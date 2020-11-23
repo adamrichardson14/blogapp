@@ -24,6 +24,7 @@ const addPost = async (req, res) => {
     html,
     imageUrl,
     mdText,
+    featured,
   } = req.body;
 
   try {
@@ -40,6 +41,7 @@ const addPost = async (req, res) => {
       imageUrl,
       id: user.uid + Math.random().toString(36).substr(2, 10).toUpperCase(),
       mdText,
+      featured,
     };
     if (!user) {
       return res.status(401).send('Not authorised');

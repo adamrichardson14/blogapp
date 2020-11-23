@@ -4,7 +4,8 @@ import { useRouter } from 'next/router';
 import DisplayPosts from '../../components/displayposts';
 import Head from 'next/head';
 import IntroText from '../../components/introText';
-
+import FeaturedPost from '../../components/featuredPost';
+import Footer from '../../components/Footer';
 export const getStaticPaths = () => {
   return {
     paths: [],
@@ -20,12 +21,20 @@ export const getStaticProps = async ({ params }) => {
       headers: {},
     };
     const res = await axios(config);
-    const data = res.data;
-    console.log(data);
+
+    const posts = res.data.posts;
+    console.log(posts);
+    const featuredPost = posts.find((post) => post.featured);
+    console.log(featuredPost);
+    const siteInfo = res.data.siteInfo;
+    console.log(siteInfo);
     return {
       props: {
-        siteInfo: data.siteInfo,
-        posts: data.posts,
+        posts: featuredPost
+          ? posts.filter((post) => post.slug != featuredPost.slug)
+          : posts,
+        featuredPost: featuredPost ? featuredPost : null,
+        siteInfo,
       },
     };
   } catch (error) {
@@ -38,7 +47,7 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 };
-const BlogHome = ({ siteInfo, posts }) => {
+const BlogHome = ({ siteInfo, posts, featuredPost }) => {
   const router = useRouter();
 
   if (router.isFallback) return <h2>Loading...</h2>;
@@ -48,16 +57,18 @@ const BlogHome = ({ siteInfo, posts }) => {
         <title>{siteInfo.title}</title>
       </Head>
       <header>
-        <div className='wrapper max-w-7xl mx-auto mb-5'>
+        <div className='wrapper max-w-7xl mx-auto mb-5 w-10/12'>
           <IntroText
             title={siteInfo.title}
             description={siteInfo.description}
           />
         </div>
       </header>
-      <div className='wrapper max-w-7xl mx-auto mb-5'>
+      <div className='wrapper max-w-7xl mx-auto mb-5 w-10/12'>
+        <FeaturedPost post={featuredPost} />
         <DisplayPosts posts={posts} />
       </div>
+      <Footer title={siteInfo.title} />
     </>
   );
 };
