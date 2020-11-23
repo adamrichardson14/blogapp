@@ -13,15 +13,12 @@ if (!admin.apps.length) {
   });
 }
 
-const PublishToggle = async (req, res) => {
+const deleteSinglePost = async (req, res) => {
   const token = req.headers.token;
   const postID = req.query.id;
-  console.log(token);
-  console.log(postID);
 
   try {
     const user = await verifyIdToken(token);
-    console.log(user);
 
     if (!user) {
       return res.status(401).send('Not authorised');
@@ -35,7 +32,6 @@ const PublishToggle = async (req, res) => {
         .get();
 
       const existingPost = postInfo.data();
-      const existingPublishStatus = existingPost.publish;
 
       if (existingPost.id != postID) {
         return res.status(401).send('Not authorised, ID is not correct');
@@ -52,12 +48,12 @@ const PublishToggle = async (req, res) => {
         .firestore()
         .collection(`sites/${user.uid}/posts`)
         .doc(postID)
-        .update({
-          publish: !existingPublishStatus,
-        });
+        .delete();
 
       console.log(res);
-      return res.status(200).json({ status: !existingPublishStatus });
+      return res
+        .status(200)
+        .json({ status: 'Successfully deleted your blog post' });
     } catch (error) {
       console.log(error);
       return res.status(500).send('Something went wrong');
@@ -68,4 +64,4 @@ const PublishToggle = async (req, res) => {
   }
 };
 
-export default PublishToggle;
+export default deleteSinglePost;

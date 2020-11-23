@@ -13,7 +13,7 @@ if (!admin.apps.length) {
   });
 }
 
-const addPost = async (req, res) => {
+const editPost = async (req, res) => {
   const token = req.headers.token;
   const postID = req.query.id;
 
@@ -84,4 +84,4 @@ const addPost = async (req, res) => {
   }
 };
 
-export default addPost;
+export default editPost;

@@ -27,6 +27,29 @@ const Index = () => {
 
   const notify = (type, text, options) => toast[type](text, options);
 
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/deletesinglepost?id=${id}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+            token: user.token,
+          }),
+        }
+      );
+      const msg = await res.json();
+      console.log(msg);
+      mutate();
+      notify('success', 'Post successfully deleted', {
+        position: 'bottom-center',
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handlePublishChange = async (id) => {
     try {
       const res = await fetch(
@@ -116,25 +139,32 @@ const Index = () => {
                           </div>
 
                           <p className='text-md'>{post.excerpt}</p>
-                          <div className='-mt-2'>
+                          <div className='-mt-2 flex space-x-5'>
                             <Link
                               href={{
                                 pathname: '/editpost/[id]',
                                 query: { id: post.id },
                               }}>
-                              <button className='w-20  uppercase text-gray-500 font-bold text-lg hover:text-gray-700'>
+                              <button className='uppercase text-gray-500 font-bold text-lg hover:text-gray-700'>
                                 Edit
                               </button>
                             </Link>
-                            <button className='w-20 uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+                            <button className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
                               View
                             </button>
                             <button
                               onClick={() => {
                                 handlePublishChange(post.id);
                               }}
-                              className='w-20 uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+                              className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
                               {post.publish ? 'UnPublish' : 'Publish'}
+                            </button>
+                            <button
+                              onClick={() => {
+                                handleDelete(post.id);
+                              }}
+                              className='uppercase text-red-50 shadow font-semibold px-3 hover:text-gray-700 text-base bg-red-500 rounded-xl'>
+                              Delete
                             </button>
                           </div>
                         </div>
