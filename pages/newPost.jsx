@@ -71,7 +71,7 @@ const NewPost = () => {
     try {
       let config = {
         method: 'post',
-        url: 'http://localhost:3000/api/addpost',
+        url: `${process.env.NEXT_PUBLIC_URL}/api/addpost`,
         headers: {
           'Content-Type': 'application/json',
           token: user.token,

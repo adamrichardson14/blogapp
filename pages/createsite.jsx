@@ -35,7 +35,7 @@ const createsite = () => {
       };
       let config = {
         method: 'post',
-        url: 'http://localhost:3000/api/addsiteinfo',
+        url: `${process.env.NEXT_PUBLIC_URL}/api/addsiteinfo`,
         headers: {
           'Content-Type': 'application/json',
           token: user.token,

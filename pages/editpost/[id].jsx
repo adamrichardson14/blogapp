@@ -104,7 +104,7 @@ const EditPost = ({ id }) => {
     try {
       let config = {
         method: 'post',
-        url: `http://localhost:3000/api/editpost?id=${postData.id}`,
+        url: `${process.env.NEXT_PUBLIC_URL}/api/editpost?id=${postData.id}`,
         headers: {
           'Content-Type': 'application/json',
           token: user.token,

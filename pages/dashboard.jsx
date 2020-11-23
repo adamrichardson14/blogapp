@@ -30,7 +30,7 @@ const Index = () => {
   const handleDelete = async (id) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/deletesinglepost?id=${id}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/deletesinglepost?id=${id}`,
         {
           method: 'GET',
           headers: new Headers({
@@ -53,7 +53,7 @@ const Index = () => {
   const handlePublishChange = async (id) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/publishtoggle?id=${id}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/publishtoggle?id=${id}`,
         {
           method: 'GET',
           headers: new Headers({

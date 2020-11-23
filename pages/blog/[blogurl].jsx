@@ -17,7 +17,7 @@ export const getStaticProps = async ({ params }) => {
   try {
     const config = {
       method: 'get',
-      url: `http://localhost:3000/api/getbloginfopublic?sitename=${params.blogurl}`,
+      url: `${process.env.NEXT_PUBLIC_URL}/api/getbloginfopublic?sitename=${params.blogurl}`,
       headers: {},
     };
     const res = await axios(config);
