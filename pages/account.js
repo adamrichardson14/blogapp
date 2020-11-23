@@ -4,6 +4,7 @@ import { useUser } from '../utils/auth/useUser';
 import Header from '../components/DashHeader';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import SiteInfoDetail from '../components/account/SiteInfoDetail';
+import { toast, ToastContainer } from 'react-toastify';
 
 const fetcher = (url, token) =>
   fetch(url, {

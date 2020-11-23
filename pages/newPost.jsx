@@ -24,6 +24,7 @@ import {
   validateImageUrl,
   validateExcerpt,
 } from '../utils/formValidation';
+import { toast, ToastContainer } from 'react-toastify';
 
 import 'firebase/storage';
 InitFireBase();
@@ -32,7 +33,14 @@ const storage = firebase.storage();
 const storageRef = storage.ref();
 
 const NewPost = () => {
-  const { register, handleSubmit, errors, getValues, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    getValues,
+    setValue,
+    reset,
+  } = useForm();
   const [mdText, setMdText] = useState(content);
   const { user, logout } = useUser();
   const [editorTheme, setEditorTheme] = useState(false);
@@ -71,9 +79,24 @@ const NewPost = () => {
       };
       console.log(data);
       const response = await axios(config); //TODO: Add toast for successful creation
-      console.log(response);
-    } catch (err) {
-      console.error(err); //TODO: Add toast for error
+      notify(
+        'success',
+        <div>
+          <span>Your post has been created.</span>
+          <button>View Post</button>
+        </div>,
+        {
+          position: 'bottom-center',
+        }
+      );
+      reset();
+      setMdText('');
+      sethtmlValue('');
+    } catch (error) {
+      console.log(error.response);
+      notify('error', error.response.data.error, {
+        position: 'bottom-center',
+      });
     }
   };
 
@@ -116,6 +139,8 @@ const NewPost = () => {
       </>
     );
   }
+
+  const notify = (type, text, options) => toast[type](text, options);
 
   return (
     <>
@@ -373,6 +398,7 @@ const NewPost = () => {
               <AiOutlineAlignRight className='text-5xl  ' />
             </button>
           </div>
+          <ToastContainer />
           <div className='w-1/2 h-screen overflow-scroll'>
             <div className='w-11/12 mx-auto'>
               <div dangerouslySetInnerHTML={{ __html: htmlValue }}></div>

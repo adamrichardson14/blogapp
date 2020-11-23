@@ -45,6 +45,21 @@ const addPost = async (req, res) => {
       return res.status(401).send('Not authorised');
     }
 
+    const getPostUrls = await admin
+      .firestore()
+      .collection(`sites/${user.uid}/posts`)
+      .where('slug', '==', data.slug)
+      .get();
+
+    try {
+      if (!getPostUrls.empty) {
+        throw new Error('You already have a post with this title/slug');
+      }
+    } catch (err) {
+      console.log(err.message);
+      return res.status(409).json({ error: err.message });
+    }
+
     try {
       const postInfo = await admin
         .firestore()
