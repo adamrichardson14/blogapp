@@ -398,7 +398,15 @@ const NewPost = () => {
               <AiOutlineAlignRight className='text-5xl  ' />
             </button>
           </div>
-          <ToastContainer />
+          <ToastContainer
+            position='bottom-center'
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <div className='w-1/2 h-screen overflow-scroll'>
             <div className='w-11/12 mx-auto'>
               <div dangerouslySetInnerHTML={{ __html: htmlValue }}></div>

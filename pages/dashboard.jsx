@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import Link from 'next/link';
 import { useUser } from '../utils/auth/useUser';
 import Header from '../components/DashHeader';
@@ -7,6 +7,7 @@ import Image from 'next/image';
 import firebase from 'firebase/app';
 import { TimeStamp } from 'firebase';
 import { FiArrowRightCircle, FiEdit } from 'react-icons/fi';
+import { toast, ToastContainer } from 'react-toastify';
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -17,14 +18,44 @@ const fetcher = (url, token) =>
 
 const Index = () => {
   const { user } = useUser();
+  const notify = (type, text, options) => toast[type](text, options);
 
-  const { data: postData, postError } = useSWR(
+  const { data: postData, postError, mutate } = useSWR(
     user ? ['/api/getallpostsauth', user.token] : null,
     fetcher,
     {
       revalidateOnFocus: false,
     }
   );
+
+  const handlePublishChange = async (id) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/publishtoggle?id=${id}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+            token: user.token,
+          }),
+        }
+      );
+      const msg = await res.json();
+      console.log(msg);
+      mutate();
+      notify(
+        'success',
+        msg.status
+          ? 'Successfully published your post'
+          : 'Successfully unpublished your post',
+        {
+          position: 'bottom-center',
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   if (!postData) return <h1>loading</h1>;
   if (postError) return <h1>You don't have any posts yet, create one now</h1>;
@@ -99,7 +130,11 @@ const Index = () => {
                             <button className='w-20 uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
                               View
                             </button>
-                            <button className='w-20 uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+                            <button
+                              onClick={() => {
+                                handlePublishChange(post.id);
+                              }}
+                              className='w-20 uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
                               {post.publish ? 'UnPublish' : 'Publish'}
                             </button>
                           </div>
@@ -119,6 +154,15 @@ const Index = () => {
             </button>
           </Link>
         </div>
+        <ToastContainer
+          position='bottom-center'
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </main>
       )
     </>
