@@ -25,6 +25,7 @@ import {
   validateExcerpt,
 } from '../utils/formValidation';
 import { toast, ToastContainer } from 'react-toastify';
+const notify = (type, text, options) => toast[type](text, options);
 
 import 'firebase/storage';
 InitFireBase();
@@ -42,7 +43,7 @@ const NewPost = () => {
     reset,
   } = useForm();
   const [mdText, setMdText] = useState(content);
-  const { user, logout } = useUser();
+  const { user } = useUser();
   const [editorTheme, setEditorTheme] = useState(false);
   const [show, setShow] = useState(false);
   const [isEditorReady, setIsEditorReady] = useState(false);
