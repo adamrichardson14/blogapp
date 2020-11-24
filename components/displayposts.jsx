@@ -60,7 +60,7 @@ const DisplayPosts = ({ posts, url }) => (
                       <motion.h2
                         layoutId={post.title}
                         animate={{ scale: 1 }}
-                        className='font-bold text-xl md:text-xl lg:text-3xl sm:truncate'>
+                        className='font-bold text-xl md:text-xl lg:text-3xl sm:truncate cursor-pointer'>
                         {post.title}
                       </motion.h2>
                     </a>

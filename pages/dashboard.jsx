@@ -55,6 +55,35 @@ const Dashboard = () => {
     }
   };
 
+  const handleFeaturedChange = async (id) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/togglefeaturedpost?id=${id}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+            token: user.token,
+          }),
+        }
+      );
+      const msg = await res.json();
+      console.log(msg);
+      mutate();
+      notify(
+        msg.status ? 'success' : 'info',
+        msg.status
+          ? 'Successfully featured your post'
+          : 'Successfully unfeatured your post',
+        {
+          position: 'bottom-center',
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handlePublishChange = async (id) => {
     try {
       const res = await fetch(
@@ -102,10 +131,18 @@ const Dashboard = () => {
     );
   }
 
+  if (!user) {
+    return (
+      <div className='max-w-7xl mx-auto p-10'>
+        <Link href='/auth'>Sign in</Link>
+      </div>
+    );
+  }
+
   return (
     <React.Fragment>
       <Header />
-      <main className='max-w-5xl mt-5 mx-auto'>
+      <main className='max-w-5xl mt-5 mx-auto mb-10'>
         <div className='w-11/12 mx-auto'>
           {!data ? (
             <Loading />
@@ -125,6 +162,7 @@ const Dashboard = () => {
                             key={post.slug}
                             handleDelete={handleDelete}
                             handlePublishChange={handlePublishChange}
+                            handleFeaturedChange={handleFeaturedChange}
                             post={post}
                             site={data.siteInfo}
                           />

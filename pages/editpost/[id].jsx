@@ -21,11 +21,14 @@ import breaks from 'remark-breaks';
 import { createSlug } from '../../utils/utils';
 import axios from 'axios';
 import InitFireBase from '../../utils/auth/initFirebase';
+import { toast, ToastContainer } from 'react-toastify';
 import {
   validateTitle,
   validateImageUrl,
   validateExcerpt,
 } from '../../utils/formValidation';
+
+const notify = (type, text, options) => toast[type](text, options);
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -46,7 +49,6 @@ const EditPost = ({ id }) => {
   const [snapShotProgress, setSnapShotProgress] = useState(0);
   const [show, setShow] = useState(false);
   const [imageUrl, setImageUrl] = useState();
-  console.log(id);
 
   const url = `/api/getpostbyidauth?id=${id}`;
 
@@ -62,8 +64,8 @@ const EditPost = ({ id }) => {
   function handleEditorDidMount(_valueGetter) {
     valueGetter.current = _valueGetter;
     setMdText(postData.mdText);
-    processMD();
     setIsEditorReady(true);
+    processMD();
   }
 
   const handleEditorChange = (ev, value) => {
@@ -112,10 +114,24 @@ const EditPost = ({ id }) => {
         data: data,
       };
       console.log(data);
-      const response = await axios(config); //TODO: Add toast for successful creation
+      const response = await axios(config);
+      notify(
+        'success',
+        <div>
+          <span>Your post has been updated</span>
+          <Link href='/dashboard'>
+            <button>Dashboard</button>
+          </Link>
+        </div>,
+        {
+          position: 'bottom-center',
+        }
+      );
       console.log(response);
     } catch (err) {
-      console.error(err); //TODO: Add toast for error
+      notify('error', error.response.data.error, {
+        position: 'bottom-center',
+      });
     }
   };
 
@@ -396,6 +412,7 @@ const EditPost = ({ id }) => {
               </div>
             </div>
           </div>
+          <ToastContainer />
           <div className='flex p-0 m-0'>
             <ControlledEditor
               height='100vh'

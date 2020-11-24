@@ -13,36 +13,16 @@ if (!admin.apps.length) {
   });
 }
 
-const editPost = async (req, res) => {
+const PublishToggle = async (req, res) => {
   const token = req.headers.token;
   const postID = req.query.id;
-
-  const {
-    category,
-    excerpt,
-    publish,
-    slug,
-    title,
-    html,
-    imageUrl,
-    mdText,
-    featured,
-  } = req.body;
+  console.log(token);
+  console.log(postID);
 
   try {
     const user = await verifyIdToken(token);
     console.log(user);
-    const data = {
-      category,
-      excerpt,
-      publish,
-      slug,
-      title,
-      html,
-      imageUrl,
-      mdText,
-      featured,
-    };
+
     if (!user) {
       return res.status(401).send('Not authorised');
     }
@@ -55,11 +35,14 @@ const editPost = async (req, res) => {
         .get();
 
       const existingPost = postInfo.data();
+      const existingFeaturedStatus = existingPost.featured;
 
       if (existingPost.authorId != user.uid) {
         return res
           .status(401)
-          .json({ error: 'Only the author can edit a post' });
+          .send(
+            'Not authorised, you must be the author of a post to change the featured status'
+          );
       }
 
       const postSnapshot = await admin
@@ -67,12 +50,10 @@ const editPost = async (req, res) => {
         .collection(`sites/${user.uid}/posts`)
         .doc(postID)
         .update({
-          ...data,
-          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          featured: !existingFeaturedStatus,
         });
 
-      console.log(res);
-      return res.status(200).json(data, postSnapshot);
+      return res.status(200).json({ status: !existingFeaturedStatus });
     } catch (error) {
       console.log(error);
       return res.status(500).send('Something went wrong');
@@ -83,4 +64,4 @@ const editPost = async (req, res) => {
   }
 };
 
-export default editPost;
+export default PublishToggle;

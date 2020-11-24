@@ -142,8 +142,6 @@ const NewPost = () => {
     );
   }
 
-  const notify = (type, text, options) => toast[type](text, options);
-
   return (
     <>
       <Head>

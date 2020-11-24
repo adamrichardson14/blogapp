@@ -4,7 +4,7 @@ import { useUser } from '../utils/auth/useUser';
 
 const Index = () => {
   return (
-    <main className='mt-10 flex'>
+    <main className='pt-10 flex bg-gray-50 h-screen'>
       <header className='max-w-screen-lg xl:max-w-screen-xl mx-auto px-4'>
         <div className=' flex items-center'>
           <svg
@@ -49,9 +49,11 @@ const Index = () => {
             for your readers.
           </p>
           <div className='sm:text-lg sm:leading-snug font-semibold tracking-wide uppercase text-green-500 mb-3'></div>
-          <button className='bg-light-blue-500 hover:bg-light-blue-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-light-blue-500 focus:outline-none transition-colors duration-200'>
-            Create Blog
-          </button>
+          <Link href='/auth'>
+            <button className='bg-light-blue-500 hover:bg-light-blue-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-light-blue-500 focus:outline-none transition-colors duration-200'>
+              Create Blog
+            </button>
+          </Link>
           <Link href='/auth'>
             <button className='ml-10 bg-gray-900 hover:bg-gray-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200'>
               Sign in

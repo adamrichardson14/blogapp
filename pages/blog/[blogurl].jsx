@@ -6,6 +6,7 @@ import Head from 'next/head';
 import IntroText from '../../components/introText';
 import FeaturedPost from '../../components/featuredPost';
 import Footer from '../../components/Footer';
+import Loading from '../../components/Loading';
 export const getStaticPaths = () => {
   return {
     paths: [],
@@ -24,21 +25,18 @@ export const getStaticProps = async ({ params }) => {
 
     const posts = res.data.posts;
     console.log(posts);
-    const featuredPost = posts.find((post) => post.featured);
-    console.log(featuredPost);
     const siteInfo = res.data.siteInfo;
     console.log(siteInfo);
+    const featuredPost = res.data.featuredPost;
+    console.log(featuredPost);
     return {
       props: {
-        posts: featuredPost
-          ? posts.filter((post) => post.slug != featuredPost.slug)
-          : posts,
-        featuredPost: featuredPost ? featuredPost : null,
+        posts,
         siteInfo,
+        featuredPost,
       },
     };
   } catch (error) {
-    console.log(error.response.data.error);
     return {
       redirect: {
         destination: '/',
@@ -50,7 +48,7 @@ export const getStaticProps = async ({ params }) => {
 const BlogHome = ({ siteInfo, posts, featuredPost }) => {
   const router = useRouter();
 
-  if (router.isFallback) return <h2>Loading...</h2>;
+  if (router.isFallback) return <Loading />;
   return (
     <>
       <Head>
@@ -65,7 +63,9 @@ const BlogHome = ({ siteInfo, posts, featuredPost }) => {
         </div>
       </header>
       <div className='wrapper max-w-7xl mx-auto mb-5 w-10/12'>
-        <FeaturedPost post={featuredPost} url={siteInfo.url} />
+        {featuredPost && (
+          <FeaturedPost post={featuredPost} url={siteInfo.url} />
+        )}
         <DisplayPosts posts={posts} url={siteInfo.url} />
       </div>
       <Footer title={siteInfo.title} />

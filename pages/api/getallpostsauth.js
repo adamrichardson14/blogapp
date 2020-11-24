@@ -27,6 +27,8 @@ const getAllPostsAuth = async (req, res) => {
       .collection('sites')
       .doc(user.uid)
       .collection('posts')
+      .limit(10)
+      .orderBy('createdAt', 'desc')
       .get();
 
     const siteInfoSnapshot = await admin

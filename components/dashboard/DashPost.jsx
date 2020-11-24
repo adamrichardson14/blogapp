@@ -13,6 +13,15 @@ const DashPost = (props) => (
         height={170}
         width={170}
         layout='responsive'></Image>
+      <div
+        className={`${
+          props.post.publish && props.post.featured ? 'block' : 'hidden'
+        } `}>
+        <span className='absolute top-0 left-0 bg-yellow-500 rounded-tl-xl text-red-50 rounded-br-xl px-2 py-1'>
+          FEATURED
+        </span>
+      </div>
+
       <div className={`${props.post.publish ? 'hidden' : 'block'} `}>
         <span className='absolute top-0 left-0 bg-red-500 rounded-tl-xl text-red-50 rounded-br-xl px-2 py-1'>
           DRAFT
@@ -59,6 +68,13 @@ const DashPost = (props) => (
           }}
           className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
           {props.post.publish ? 'UnPublish' : 'Publish'}
+        </button>
+        <button
+          onClick={() => {
+            props.handleFeaturedChange(props.post.id);
+          }}
+          className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+          {props.post.featured ? 'UnFeature' : 'Feature'}
         </button>
         <button
           onClick={() => {

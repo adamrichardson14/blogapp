@@ -34,6 +34,8 @@ const getAllPostsAuth = async (req, res) => {
       .collection('sites')
       .doc(siteData.user)
       .collection('posts')
+      .limit(10)
+      .orderBy('createdAt', 'desc')
       .get();
     if (postSnapshot.empty) {
       throw new Error('There are no posts here');
@@ -57,6 +59,7 @@ const getAllPostsAuth = async (req, res) => {
 
       posts.push(post);
     });
+    const featuredPost = posts.find((post) => post.featured);
 
     return res.status(200).json({
       siteInfo: {
@@ -66,7 +69,10 @@ const getAllPostsAuth = async (req, res) => {
         title: siteData.title,
         description: siteData.description,
       },
-      posts,
+      posts: featuredPost
+        ? posts.filter((post) => post.slug != featuredPost.slug)
+        : posts,
+      featuredPost: featuredPost ? featuredPost : null,
     });
   } catch (error) {
     return res.status(404).send(error.message);
