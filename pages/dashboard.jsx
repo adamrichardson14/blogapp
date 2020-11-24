@@ -71,7 +71,7 @@ const Dashboard = () => {
       console.log(msg);
       mutate();
       notify(
-        'success',
+        msg.status ? 'success' : 'info',
         msg.status
           ? 'Successfully published your post'
           : 'Successfully unpublished your post',
