@@ -18,7 +18,7 @@ const fetcher = (url, token) =>
     credentials: 'same-origin',
   }).then((res) => res.json());
 
-const Index = () => {
+const Dashboard = () => {
   const { user } = useUser();
 
   const { data, error, mutate } = useSWR(
@@ -122,10 +122,11 @@ const Index = () => {
                       data.allPosts.map((post) => {
                         return (
                           <DashPost
-                            key={post.url}
+                            key={post.slug}
                             handleDelete={handleDelete}
                             handlePublishChange={handlePublishChange}
                             post={post}
+                            site={data.siteInfo}
                           />
                         );
                       })}
@@ -157,4 +158,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Dashboard;

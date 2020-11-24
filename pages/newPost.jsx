@@ -84,7 +84,9 @@ const NewPost = () => {
         'success',
         <div>
           <span>Your post has been created.</span>
-          <button>View Post</button>
+          <Link href='/dashboard'>
+            <button>Dashboard</button>
+          </Link>
         </div>,
         {
           position: 'bottom-center',

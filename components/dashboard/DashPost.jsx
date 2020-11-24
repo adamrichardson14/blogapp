@@ -46,9 +46,13 @@ const DashPost = (props) => (
             Edit
           </button>
         </Link>
-        <button className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
-          View
-        </button>
+        <a
+          href={`${process.env.NEXT_PUBLIC_URL}/blog/${props.site.url}/${props.post.slug}`}
+          target='_blank'>
+          <button className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+            View
+          </button>
+        </a>
         <button
           onClick={() => {
             props.handlePublishChange(props.post.id);

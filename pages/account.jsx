@@ -13,7 +13,7 @@ const fetcher = (url, token) =>
     credentials: 'same-origin',
   }).then((res) => res.json());
 
-const Index = () => {
+const Account = () => {
   const { user, logout } = useUser();
 
   const { data, error } = useSWR(
@@ -89,4 +89,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Account;

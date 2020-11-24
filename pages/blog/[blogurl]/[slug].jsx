@@ -24,7 +24,7 @@ const Post = ({ post, siteInfo }) => {
         />
       </Head>
       <div>
-        <div className='md:flex md:flex-row-reverse max-w-7xl'>
+        <div className='md:flex md:flex-row-reverse max-w-7xl mx-auto'>
           <header className='md:w-1/2'>
             <Image
               className='object-cover'
@@ -89,7 +89,7 @@ const Post = ({ post, siteInfo }) => {
           </div>
         </div>
 
-        <main className='mt-3 w-11/12 mx-auto md:w-11/12 md:mt-5 mb-10'>
+        <main className='mt-3 max-w-7xl w-11/12 mx-auto md:w-11/12 md:mt-5 mb-10'>
           <div dangerouslySetInnerHTML={{ __html: post.html }}></div>
         </main>
       </div>
