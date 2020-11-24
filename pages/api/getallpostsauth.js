@@ -28,6 +28,16 @@ const getAllPostsAuth = async (req, res) => {
       .doc(user.uid)
       .collection('posts')
       .get();
+
+    const siteInfoSnapshot = await admin
+      .firestore()
+      .collection('sites')
+      .doc(user.uid)
+      .get();
+    if (!siteInfoSnapshot.exists) {
+      return res.status(404).json({ siteError: 'You need to create a site' });
+    }
+    const siteInfo = siteInfoSnapshot.data();
     const allPosts = [];
     if (allPostsSnapshot) {
       allPostsSnapshot.forEach((post) => {
@@ -39,10 +49,12 @@ const getAllPostsAuth = async (req, res) => {
     }
 
     if (allPosts.length === 0) {
-      return res.status(404).send('You do not have any posts yet');
+      return res
+        .status(404)
+        .json({ postError: "You don't have any posts yet" });
     }
 
-    return res.status(200).json(allPosts);
+    return res.status(200).json({ allPosts, siteInfo });
   } catch (error) {
     console.log(error);
     return res.status(500).send('Server Error');

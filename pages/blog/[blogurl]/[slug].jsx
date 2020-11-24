@@ -25,7 +25,7 @@ const Post = ({ post, siteInfo }) => {
       </Head>
       <div>
         <div className='md:flex md:flex-row-reverse max-w-7xl'>
-          <header className='md:w-1/2' layoutId={'postImage'}>
+          <header className='md:w-1/2'>
             <Image
               className='object-cover'
               src={post.imageUrl}

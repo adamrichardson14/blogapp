@@ -66,9 +66,6 @@ const Index = () => {
             <h1>{data.title}</h1>
           </div>
 
-          <div className='mx-auto w-10/12'>
-            <p>You're signed in. email: {user.email}</p>
-          </div>
           <div className='mx-auto w-10/12 bg-gray-50 border border-gray-200 rounded-xl shadow p-4'>
             <h2>Blog details</h2>
             <SiteInfoDetail title='Title:' data={data.title}></SiteInfoDetail>

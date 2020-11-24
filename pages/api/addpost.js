@@ -72,10 +72,8 @@ const addPost = async (req, res) => {
           createdAt: admin.firestore.FieldValue.serverTimestamp(),
         });
 
-      console.log(res);
       return res.status(200).json(data, postInfo);
     } catch (error) {
-      console.log(error);
       return res.status(500).send('Something went wrong');
     }
   } catch (error) {

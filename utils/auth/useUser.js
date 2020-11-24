@@ -35,11 +35,10 @@ const useUser = () => {
     // both kept up to date
     const cancelAuthListener = firebase
       .auth()
-      .onIdTokenChanged(async (user) => {
+      .onAuthStateChanged(async (user) => {
         if (user) {
           console.log(user);
           const userData = await mapUserData(user);
-          setUserCookie(userData);
           setUser(userData);
         } else {
           removeUserCookie();
@@ -48,10 +47,7 @@ const useUser = () => {
       });
 
     const userFromCookie = getUserFromCookie();
-    if (!userFromCookie) {
-      router.push('/');
-      return;
-    }
+
     setUser(userFromCookie);
 
     return () => {
