@@ -30,6 +30,7 @@ export const getStaticProps = async ({ params }) => {
     const featuredPost = res.data.featuredPost;
     console.log(featuredPost);
     return {
+      revalidate: 7200,
       props: {
         posts,
         siteInfo,

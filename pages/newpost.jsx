@@ -94,6 +94,8 @@ const NewPost = () => {
         }
       );
       reset();
+      setImageUrl('');
+      setSnapShotProgress(0);
       setMdText('');
       sethtmlValue('');
     } catch (error) {

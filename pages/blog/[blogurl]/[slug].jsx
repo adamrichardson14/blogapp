@@ -108,7 +108,7 @@ export const getStaticProps = async ({ params }) => {
   const post = postRes.post;
   const siteInfo = postRes.siteInfo;
   return {
-    revalidate: 1000,
+    revalidate: 7200,
     props: {
       post,
       siteInfo,
