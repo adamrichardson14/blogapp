@@ -31,18 +31,18 @@ const Sidebar = ({ show, setEditorTheme, editorTheme }) => {
                   placeholder='Must be lowercase, no spaces'
                 />
               </label>
-              <label class='text-lg font-semibold mt-1'>
+              <label className='text-lg font-semibold mt-1'>
                 Choose A Category
                 <select
                   name='category'
-                  class='form-select mt-1 block w-full border-gray-300 border rounded-lg'>
+                  className='form-select mt-1 block w-full border-gray-300 border rounded-lg'>
                   <option>Tech</option>
                   <option>Coding</option>
                   <option>Javascript</option>
                   <option>Python</option>
                 </select>
               </label>
-              <label class='block text-lg font-semibold mt-1'>
+              <label className='block text-lg font-semibold mt-1'>
                 <span>Custom Excerpt</span>
                 <textarea
                   name='excerpt'

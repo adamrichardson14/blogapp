@@ -54,7 +54,6 @@ const NewPost = () => {
   const [imageUrl, setImageUrl] = useState();
 
   const onSubmit = async (values) => {
-    console.log(values);
     const slugSubmitValue = getValues('slugurl');
 
     const data = {
@@ -79,8 +78,8 @@ const NewPost = () => {
         },
         data: data,
       };
-      console.log(data);
-      const response = await axios(config); //TODO: Add toast for successful creation
+
+      const response = await axios(config);
       notify(
         'success',
         <div>
@@ -120,9 +119,7 @@ const NewPost = () => {
       .use(highlight)
       .use(stringify)
       .process(valueGetter.current(), (err, data) => {
-        if (err) console.log(err);
-        sethtmlValue(data.contents);
-        console.log(data.contents);
+        if (err) sethtmlValue(data.contents);
       });
   }
 
@@ -176,7 +173,6 @@ const NewPost = () => {
                       onBlur={() => {
                         const title = getValues('title');
                         setValue('slugurl', String(createSlug(title)));
-                        console.log(getValues('slugurl'));
                       }}
                       placeholder='Enter the title of your blog post here'
                     />
@@ -235,7 +231,6 @@ const NewPost = () => {
                     accept='.jpeg,.jpg,.png,.svg'
                     onChange={() => {
                       setImageInput(event.target.files[0]);
-                      console.log(imageInput);
                     }}
                   />
                   <button
@@ -243,11 +238,11 @@ const NewPost = () => {
                     disabled={!imageInput}
                     onClick={(e) => {
                       e.preventDefault();
-                      console.log(imageInput);
+
                       if (imageInput === '') {
                         console.error(`You need an image to do that.`);
                       }
-                      console.log(imageInput);
+
                       const userRef = storageRef.child(`/${user.id}`);
                       const uploadTask = userRef
                         .child(`${imageInput.name}`)
@@ -260,11 +255,9 @@ const NewPost = () => {
                             (snapshot.bytesTransferred / snapshot.totalBytes) *
                             100;
                           setSnapShotProgress(progress);
-                          console.log(snapshot);
                         },
                         (err) => {
                           //catches the errors
-                          console.log(err);
                         },
                         () => {
                           // gets the functions from storage refences the image storage in firebase by the children
@@ -276,7 +269,6 @@ const NewPost = () => {
                             .then((fireBaseUrl) => {
                               setImageInput(null);
                               setImageUrl(fireBaseUrl);
-                              console.log(fireBaseUrl);
                               setValue('imageUrl', fireBaseUrl);
                             });
                         }

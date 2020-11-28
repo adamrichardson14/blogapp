@@ -101,7 +101,6 @@ const Post = ({ post, siteInfo }) => {
 export default Post;
 
 export const getStaticProps = async ({ params }) => {
-  console.log(params);
   const postRes = await getData(
     `${process.env.NEXT_PUBLIC_URL}/api/getsinglepostpublic?sitename=${params.blogurl}&slug=${params.slug}`
   );

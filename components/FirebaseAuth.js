@@ -20,10 +20,8 @@ const firebaseAuthConfig = {
   credentialHelper: 'none',
   callbacks: {
     signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
-      console.log(user);
       const userData = await mapUserData(user);
       setUserCookie(userData);
-      console.log(userData);
     },
   },
 };

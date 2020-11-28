@@ -59,7 +59,6 @@ const EditPost = ({ id }) => {
       revalidateOnFocus: false,
     }
   );
-  console.log(postData);
 
   function handleEditorDidMount(_valueGetter) {
     valueGetter.current = _valueGetter;
@@ -82,15 +81,12 @@ const EditPost = ({ id }) => {
       .use(highlight)
       .use(stringify)
       .process(valueGetter.current(), (err, data) => {
-        if (err) console.log(err);
-        sethtmlValue(data.contents);
-        console.log(data.contents);
+        if (err) sethtmlValue(data.contents);
       });
   }
 
   const onSubmit = async (values) => {
     const slugSubmitValue = getValues('slugurl');
-    console.log(values);
     const data = {
       title: values.title,
       slug: slugSubmitValue,
@@ -102,7 +98,6 @@ const EditPost = ({ id }) => {
       mdText,
       featured: values.featured,
     };
-    console.log(data);
     try {
       let config = {
         method: 'post',
@@ -113,7 +108,6 @@ const EditPost = ({ id }) => {
         },
         data: data,
       };
-      console.log(data);
       const response = await axios(config);
       notify(
         'success',
@@ -127,7 +121,6 @@ const EditPost = ({ id }) => {
           position: 'bottom-center',
         }
       );
-      console.log(response);
     } catch (err) {
       notify('error', error.response.data.error, {
         position: 'bottom-center',
@@ -184,7 +177,6 @@ const EditPost = ({ id }) => {
                         onBlur={() => {
                           const title = getValues('title');
                           setValue('slugurl', String(createSlug(title)));
-                          console.log(getValues('slugurl'));
                         }}
                         placeholder='Enter the title of your blog post here'
                       />
@@ -245,7 +237,6 @@ const EditPost = ({ id }) => {
                       accept='.jpeg,.jpg,.png,.svg'
                       onChange={() => {
                         setImageInput(event.target.files[0]);
-                        console.log(imageInput);
                       }}
                     />
                     <button
@@ -253,11 +244,9 @@ const EditPost = ({ id }) => {
                       disabled={!imageInput}
                       onClick={(e) => {
                         e.preventDefault();
-                        console.log(imageInput);
                         if (imageInput === '') {
                           console.error(`You need an image to do that.`);
                         }
-                        console.log(imageInput);
                         const userRef = storageRef.child(`/${user.id}`);
                         const uploadTask = userRef
                           .child(`${imageInput.name}`)
@@ -271,11 +260,9 @@ const EditPost = ({ id }) => {
                                 snapshot.totalBytes) *
                               100;
                             setSnapShotProgress(progress);
-                            console.log(snapshot);
                           },
                           (err) => {
                             //catches the errors
-                            console.log(err);
                           },
                           () => {
                             // gets the functions from storage refences the image storage in firebase by the children
@@ -287,7 +274,6 @@ const EditPost = ({ id }) => {
                               .then((fireBaseUrl) => {
                                 setImageInput(null);
                                 setImageUrl(fireBaseUrl);
-                                console.log(fireBaseUrl);
                                 setValue('imageUrl', fireBaseUrl);
                               });
                           }

@@ -24,11 +24,8 @@ export const getStaticProps = async ({ params }) => {
     const res = await axios(config);
 
     const posts = res.data.posts;
-    console.log(posts);
     const siteInfo = res.data.siteInfo;
-    console.log(siteInfo);
     const featuredPost = res.data.featuredPost;
-    console.log(featuredPost);
     return {
       revalidate: 7200,
       props: {

@@ -28,7 +28,6 @@ const Dashboard = () => {
       revalidateOnFocus: false,
     }
   );
-  console.log(data);
 
   const notify = (type, text, options) => toast[type](text, options);
 
@@ -50,9 +49,7 @@ const Dashboard = () => {
       notify('success', 'Post successfully deleted', {
         position: 'bottom-center',
       });
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const handleFeaturedChange = async (id) => {
@@ -68,7 +65,6 @@ const Dashboard = () => {
         }
       );
       const msg = await res.json();
-      console.log(msg);
       mutate();
       notify(
         msg.status ? 'success' : 'info',
@@ -79,9 +75,7 @@ const Dashboard = () => {
           position: 'bottom-center',
         }
       );
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const handlePublishChange = async (id) => {
@@ -97,7 +91,6 @@ const Dashboard = () => {
         }
       );
       const msg = await res.json();
-      console.log(msg);
       mutate();
       notify(
         msg.status ? 'success' : 'info',
@@ -108,9 +101,7 @@ const Dashboard = () => {
           position: 'bottom-center',
         }
       );
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   if (data && data.postError) {

@@ -1,17 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { truncateString } from '../../utils/utils';
 
 const DashPost = (props) => (
   <div
-    className={`grid grid-cols-12 mt-4 rounded-xl ${
+    className={` mt-4 rounded-xl sm:flex ${
       props.post.publish ? 'bg-green-50' : 'bg-red-50'
     } `}>
-    <div className='col-span-3 mr-5 relative'>
+    <div className='hidden sm:block sm:relative sm:h-36 sm:w-36'>
       <Image
         src={props.post.imageUrl}
         className='object-cover rounded-tl-xl rounded-bl-xl shadow'
-        height={170}
-        width={170}
+        height={144}
+        width={144}
         layout='responsive'></Image>
       <div
         className={`${
@@ -29,10 +30,15 @@ const DashPost = (props) => (
       </div>
     </div>
 
-    <div className='col-span-9 flex justify-center flex-col'>
-      <h5>{props.post.title}</h5>
-      <div className='flex -mt-2'>
-        <span className=' text-light-blue-500 text-md'>
+    <div className='p-2 flex flex-col space-y-1'>
+      <a
+        className='text-gray-900 text-2xl text-bold'
+        href={`${process.env.NEXT_PUBLIC_URL}/blog/${props.site.url}/${props.post.slug}`}
+        target='_blank'>
+        {props.post.title}
+      </a>
+      <div className='flex'>
+        <span className=' text-light-blue-500'>
           <span className='text-gray-700'>Published: </span>
           {new Date(props.post.date).toDateString()}
         </span>
@@ -42,8 +48,10 @@ const DashPost = (props) => (
         </span>
       </div>
 
-      <p className='text-md'>{props.post.excerpt}</p>
-      <div className='-mt-2 flex space-x-5'>
+      <span className='text-base text-gray-700 font-semibold '>
+        {truncateString(props.post.excerpt, 40)}
+      </span>
+      <div className='text-md'>
         <Link
           href={{
             pathname: '/editpost/[id]',
@@ -51,36 +59,30 @@ const DashPost = (props) => (
               id: props.post.id,
             },
           }}>
-          <button className='uppercase text-gray-500 font-bold text-lg hover:text-gray-700'>
+          <button className='hidden sm:inline-block sm:mr-4 uppercase text-gray-500 font-bold  hover:text-gray-700'>
             Edit
           </button>
         </Link>
-        <a
-          href={`${process.env.NEXT_PUBLIC_URL}/blog/${props.site.url}/${props.post.slug}`}
-          target='_blank'>
-          <button className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
-            View
-          </button>
-        </a>
+
         <button
           onClick={() => {
             props.handlePublishChange(props.post.id);
           }}
-          className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+          className='uppercase mt-1 text-gray-500 font-bold hover:text-gray-700 '>
           {props.post.publish ? 'UnPublish' : 'Publish'}
         </button>
         <button
           onClick={() => {
             props.handleFeaturedChange(props.post.id);
           }}
-          className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 text-lg'>
+          className='uppercase ml-4 text-gray-500 font-bold hover:text-gray-700 '>
           {props.post.featured ? 'UnFeature' : 'Feature'}
         </button>
         <button
           onClick={() => {
             props.handleDelete(props.post.id);
           }}
-          className='uppercase text-red-500 font-bold px-3 hover:text-red-700 text-base rounded-xl'>
+          className='uppercase text-red-500 font-bold px-3 hover:text-red-700  rounded-xl'>
           Delete
         </button>
       </div>

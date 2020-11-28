@@ -17,8 +17,7 @@ const Editor = () => {
       .use(markdown)
       .use(html)
       .process(valueGetter.current(), (err, data) => {
-        if (err) console.log(err);
-        sethtmlValue(data.contents);
+        if (err) sethtmlValue(data.contents);
       });
   }
 
@@ -27,8 +26,7 @@ const Editor = () => {
       .use(markdown)
       .use(html)
       .process(valueGetter.current(), (err, data) => {
-        if (err) console.log(err);
-        sethtmlValue(data.contents);
+        if (err) sethtmlValue(data.contents);
       });
   }
 
@@ -37,8 +35,7 @@ const Editor = () => {
       .use(markdown)
       .use(html)
       .process(valueGetter.current(), (err, data) => {
-        if (err) console.log(err);
-        sethtmlValue(data.contents);
+        if (err) sethtmlValue(data.contents);
       });
   }
   return (
