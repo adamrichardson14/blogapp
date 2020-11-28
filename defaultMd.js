@@ -36,4 +36,4 @@ const newLine = '&nbsp;';
 const quote2 =
   '> Hopefully you can see the power of markdown with a few simple syntaxes. All you need to do is get writing...';
 
-export const content = `${title} \n${imageTitle}\n\n${image}\n\n${quote}\n\n${link}\n\n${hr}\n\n${tableHeading}\n${tableIntro}\n${table1}\n${table2}\n${table3}\n${table4}\n${table5}\n\n${listsTitle}\n${ol1}\n${ol2}\n${blTitle}\n\n${codeTitle}\n${codeBlock}\n${code1}\n${code2}\n${code3}\n${code4}\n${code5}\n${code6}\n${code7}\n${codeBlock}\n${newLine}\n${quote2}`;
+export const content = `${quote}\n\n${link}\n\n${hr}\n\n${tableHeading}\n${tableIntro}\n${table1}\n${table2}\n${table3}\n${table4}\n${table5}\n\n${listsTitle}\n${ol1}\n${ol2}\n${blTitle}\n\n${codeTitle}\n${codeBlock}\n${code1}\n${code2}\n${code3}\n${code4}\n${code5}\n${code6}\n${code7}\n${codeBlock}\n${title}\n${imageTitle}\n\n${image}\n\n${newLine}\n${quote2}`;

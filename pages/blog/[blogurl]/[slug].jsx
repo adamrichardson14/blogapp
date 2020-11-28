@@ -38,9 +38,12 @@ const Post = ({ post, siteInfo }) => {
           </header>
           <div className='w-11/12 mx-auto my-2 md:my-0 sm:flex sm:flex-row sm:justify-between sm:items-center md:w-1/2 md:flex-col md:justify-center md:items-center space-y-5 md:bg-gray-50 md:px-8'>
             <div>
-              <h2 className='hidden font-normal md:block text-3xl text-gray-500 md:text-center -mb-7 md:-mb-4 md:text-2xl'>
-                {siteInfo.title}
-              </h2>
+              <Link
+                href={`${process.env.NEXT_PUBLIC_URL}/blog/${siteInfo.url}`}>
+                <a className='hidden font-normal md:block text-3xl text-gray-500 md:text-center -mb-7 md:-mb-4 md:text-2xl'>
+                  {siteInfo.title}
+                </a>
+              </Link>
               <h1 className='md:text-center text-3xl sm:text-4xl md:text-4xl lg:text-5xl'>
                 {post.title}
               </h1>
