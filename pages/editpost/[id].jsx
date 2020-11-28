@@ -81,7 +81,8 @@ const EditPost = ({ id }) => {
       .use(highlight)
       .use(stringify)
       .process(valueGetter.current(), (err, data) => {
-        if (err) sethtmlValue(data.contents);
+        if (err) console.log(error);
+        sethtmlValue(data.contents);
       });
   }
 

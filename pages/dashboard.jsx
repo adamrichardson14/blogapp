@@ -142,7 +142,13 @@ const Dashboard = () => {
             data.allPosts && (
               <div>
                 <div>
-                  <h2>Posts</h2>
+                  <a
+                    className='text-gray-900 text-2xl text-bold'
+                    href={`${process.env.NEXT_PUBLIC_URL}/blog/${data.siteInfo.url}`}
+                    target='_blank'>
+                    Visit Site
+                  </a>
+                  <h4>Posts</h4>
                 </div>
                 <div>
                   <div>

@@ -37,7 +37,6 @@ const useUser = () => {
       .auth()
       .onAuthStateChanged(async (user) => {
         if (user) {
-          console.log(user);
           const userData = await mapUserData(user);
           setUser(userData);
         } else {

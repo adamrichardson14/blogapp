@@ -78,8 +78,8 @@ const NewPost = () => {
         },
         data: data,
       };
-
-      const response = await axios(config);
+      console.log(data);
+      const response = await axios(config); //TODO: Add toast for successful creation
       notify(
         'success',
         <div>
@@ -119,7 +119,8 @@ const NewPost = () => {
       .use(highlight)
       .use(stringify)
       .process(valueGetter.current(), (err, data) => {
-        if (err) sethtmlValue(data.contents);
+        if (err) console.log(err);
+        sethtmlValue(data.contents);
       });
   }
 
@@ -258,6 +259,7 @@ const NewPost = () => {
                         },
                         (err) => {
                           //catches the errors
+                          console.log(err);
                         },
                         () => {
                           // gets the functions from storage refences the image storage in firebase by the children
